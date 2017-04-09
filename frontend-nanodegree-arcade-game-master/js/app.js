@@ -43,7 +43,7 @@ Gems.prototype.render = function(){
     var rectY = this.hitBox.y+75;
     var rectWidth = this.boxWidth;
     var rectHeight = this.boxHeight;
-    this.drawHitBox(rectX, rectY, rectWidth, rectHeight, "red");
+    this.drawHitBoxs(rectX, rectY, rectWidth, rectHeight, "red");
 };
 Gems.prototype.update = function(dt){
     this.makeHitBox();
