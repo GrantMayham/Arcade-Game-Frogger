@@ -167,7 +167,7 @@ Player.prototype.handleInput = function(direction){
 function displayInfo(player){
     var canvas = document.getElementsByTagName("canvas");
     //$('#scoreOutput').html("<h1>"+score+"<h1>");
-    scoreDiv.innerHTML = "Score: " + score + " / " + level;
+    scoreDiv.innerHTML = "Player Score: " + score + " ! " ;
     document.body.insertBefore(scoreDiv, canvas[0]);
 
 
@@ -218,7 +218,6 @@ var increaseDifficulty = function(numEnemies) {
 var allEnemies = [new Enemy(0,230), new Enemy(0,145), new Enemy(0,60)];
 var player = new Player();
 var score = 0;
-var level = 1;
 var scoreDiv = document.createElement("div");
 var gem = new Gems();
 //$('#lifeOutput').html("<h1>"+lives+"<h1>");
