@@ -15,10 +15,10 @@ var Enemy = function(x, y, enemySpeed) {
 };
 
 var Gems = function(x, y){
-    this.x = 175;
-    this.y = 240;
+    this.x = x;
+    this.y = y;
     this.boxWidth = 100;
-    this.boxHeight = 70;
+    this.boxHeight = 100;
     this.hitBox = {x:this.x, y:this.y, width:this.boxWidth, height:this.boxHeight};
     this.sprite = "images/Gem_Blue.png";
 };
@@ -28,7 +28,7 @@ Gems.prototype.makeHitBox = function(){
     this.hitBox.y = this.y;
 };
 
-Gems.prototype.drawHitBoxs = function(){
+Gems.prototype.drawHitBoxs = function(x, y, width, height, color){
     ctx.beginPath();
     ctx.rect(x, y, width, height);
     ctx.lineWidth = 2;
@@ -40,15 +40,45 @@ Gems.prototype.drawHitBoxs = function(){
 Gems.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     var rectX = this.hitBox.x;
-    var rectY = this.hitBox.y+75;
+    var rectY = this.hitBox.y+60;
     var rectWidth = this.boxWidth;
     var rectHeight = this.boxHeight;
     this.drawHitBoxs(rectX, rectY, rectWidth, rectHeight, "red");
 };
 Gems.prototype.update = function(dt){
+    //score +=500;
+    //this.x = 0;
+    //this.y = 0;
+    this.checkCollisions();
     this.makeHitBox();
     return this.x;
 };
+
+Gems.prototype.checkCollisions = function(){
+    for(var k = 0; k < allGems.length; k++){
+        var rect1 = player.hitBox;
+        var rect2 = allGems[k].hitBox;
+          //this is the collision check code from the MDN 2d collision check:
+        if (rect1.x < rect2.x + rect2.width &&
+            rect1.x + rect1.width > rect2.x &&
+            rect1.y < rect2.y + rect2.height &&
+            rect1.height + rect1.y > rect2.y) {
+            // collision detected!
+            console.log('collected');
+            Gems.prototype.update();
+            //this.render();
+            this.reset();
+        }
+    }
+
+};
+
+Gems.prototype.reset = function(){
+    score += 100;
+    this.x = 0;
+    this.x = 0;
+    this.makeHitBox();
+}
 
 
 Enemy.prototype.makeHitBox = function(){
@@ -103,6 +133,7 @@ var Player = function(){
     this.boxHeight = 75;
     this.boxXvalue = this.x + 18;
     this.boxYvalue = this.y + 61;
+    this.hitBox = {x:this.boxXvalue, y:this.boxYvalue, width:this.boxWidth, height: this.boxHeight};
 };
 
 Player.prototype.drawBox = function(x, y, width, height, color){
@@ -145,6 +176,7 @@ Player.prototype.checkCollisions = function(){
             this.reset();
         }
     }
+    
 };
 
 Player.prototype.handleInput = function(direction){
@@ -219,7 +251,7 @@ var allEnemies = [new Enemy(0,230), new Enemy(0,145), new Enemy(0,60)];
 var player = new Player();
 var score = 0;
 var scoreDiv = document.createElement("div");
-var gem = new Gems();
+var allGems = [new Gems(175, 140), new Gems(10, 80), new Gems(420, 100)];
 //$('#lifeOutput').html("<h1>"+lives+"<h1>");
 //$('#scoreOutput').html("<h1>"+score+"<h1>");
 

@@ -95,6 +95,9 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        allGems.forEach(function(Gems) {
+            Gems.update(dt);
+        });
     }
 
     /* This function initially draws the "game level", it will then call
@@ -152,7 +155,10 @@ var Engine = (function(global) {
         });
 
         player.render();
-        Gems.render();
+        allGems.forEach(function(Gems) {
+            Gems.render();
+        });
+        
     }
 
     /* This function does nothing but it could have been a good place to
