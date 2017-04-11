@@ -1,6 +1,7 @@
-frontend-nanodegree-arcade-game
+frontend-nanodegree-arcade-game frogger
 ===============================
-
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
-
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+This is a remake of the game frogger using javascript. Currently it only has one level with gems on the map to gain bonus points with you also just gaining points for making it across the level safely.
+The up Key allows the user to move up, the left key allows the user to move left, the right arrow key allows the user to move right and the down arrow allows the user to move down
+I have added objects to display enemies and gems and the player and handle the collision of either one with an update to the score.
+the hit box functions of the gems enemies and player are used to detect the collisions should they happen and when the player gets across the map the gems randomly change position. 
+To run my frogger game just open it in a web browser!
