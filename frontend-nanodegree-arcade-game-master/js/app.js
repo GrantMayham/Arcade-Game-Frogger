@@ -11,12 +11,12 @@ var Gems = function(x, y) {
         height: this.boxHeight
     };
     this.sprite = "images/Gem_Blue.png";
-};
+}
 
 Gems.prototype.makeHitBox = function() {
     this.hitBox.x = this.x;
     this.hitBox.y = this.y;
-};
+}
 
 Gems.prototype.drawHitBoxs = function(x, y, width, height, color) {
     ctx.beginPath();
@@ -25,7 +25,7 @@ Gems.prototype.drawHitBoxs = function(x, y, width, height, color) {
     ctx.strokeStyle = color;
     ctx.stroke();
 
-};
+}
 
 Gems.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -33,13 +33,13 @@ Gems.prototype.render = function() {
     var rectY = this.hitBox.y + 60;
     var rectWidth = this.boxWidth;
     var rectHeight = this.boxHeight;
-    this.drawHitBoxs(rectX, rectY, rectWidth, rectHeight, "red");
-};
+    //this.drawHitBoxs(rectX, rectY, rectWidth, rectHeight, "red");
+}
 Gems.prototype.update = function(dt) {
     this.checkCollisions();
     this.makeHitBox();
     return this.x;
-};
+}
 
 //checks to see if player hits gem to collect it
 Gems.prototype.checkCollisions = function() {
@@ -54,17 +54,17 @@ Gems.prototype.checkCollisions = function() {
         console.log('collected');
         this.reset();
     }
-};
+}
 
 Gems.prototype.reset = function() {
     score += 100;
     this.x = -500;
     this.makeHitBox();
-};
+}
 
 Gems.prototype.randomGemsOnWin = function() {
     this.x = Math.floor((Math.random() * 450) + 10);
-};
+}
 
 // Enemies our player must avoid
 var Enemy = function(x, y, enemySpeed) {
@@ -72,7 +72,7 @@ var Enemy = function(x, y, enemySpeed) {
     // we've provided one for you to get started
     this.x = x;
     this.y = y;
-    this.enemySpeed = changeEnemySpeeds();
+    this.enemySpeed = Enemy.prototype.changeEnemySpeeds(this);
     this.boxWidth = 100;
     this.boxHeight = 70;
     this.hitBox = {
@@ -85,12 +85,12 @@ var Enemy = function(x, y, enemySpeed) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-};
+}
 
 Enemy.prototype.makeHitBox = function() {
     this.hitBox.x = this.x;
     this.hitBox.y = this.y;
-};
+}
 
 Enemy.prototype.drawHitBox = function(x, y, width, height, color) {
     ctx.beginPath();
@@ -98,12 +98,12 @@ Enemy.prototype.drawHitBox = function(x, y, width, height, color) {
     ctx.lineWidth = 2;
     ctx.strokeStyle = color;
     ctx.stroke();
-};
+}
 
 //randomly gives enemies a speed
-function changeEnemySpeeds() {
+Enemy.prototype.changeEnemySpeeds = function () {
     return Math.floor((Math.random() * 175) + 10);
-};
+}
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -117,7 +117,7 @@ Enemy.prototype.update = function(dt) {
     }
     this.makeHitBox();
     return this.x;
-};
+}
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -126,8 +126,8 @@ Enemy.prototype.render = function() {
     var rectY = this.hitBox.y + 75;
     var rectWidth = this.boxWidth;
     var rectHeight = this.boxHeight;
-    this.drawHitBox(rectX, rectY, rectWidth, rectHeight, "red");
-};
+    //this.drawHitBox(rectX, rectY, rectWidth, rectHeight, "red");
+}
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -146,7 +146,7 @@ var Player = function() {
         width: this.boxWidth,
         height: this.boxHeight
     };
-};
+}
 
 Player.prototype.drawBox = function(x, y, width, height, color) {
     ctx.beginPath();
@@ -154,23 +154,23 @@ Player.prototype.drawBox = function(x, y, width, height, color) {
     ctx.lineWidth = 2;
     ctx.strokeStyle = color;
     ctx.stroke();
-};
+}
 
 Player.prototype.reset = function() {
     this.x = 200;
     this.y = 425;
-};
+}
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    this.drawBox(this.boxXvalue, this.boxYvalue, this.boxWidth, this.boxHeight, "blue");
-    displayInfo();
-};
+    //this.drawBox(this.boxXvalue, this.boxYvalue, this.boxWidth, this.boxHeight, "blue");
+    Player.prototype.displayInfo(this);
+}
 
 Player.prototype.updateHitBox = function() {
     this.boxXvalue = this.x + 20;
     this.boxYvalue = this.y + 65;
-};
+}
 
 //I use this to dynamically get the box of the player to see if it hits gem
 Player.prototype.getBoundingBox = function() {
@@ -181,7 +181,7 @@ Player.prototype.getBoundingBox = function() {
         height: this.boxHeight
     };
     return box;
-};
+}
 
 //checks to see if enemy got my player
 Player.prototype.checkCollisions = function() {
@@ -207,39 +207,39 @@ Player.prototype.checkCollisions = function() {
         }
     }
 
-};
+}
 
 //handles movement of my player
 Player.prototype.handleInput = function(direction) {
     switch (direction) {
         case "left":
-            this.x -= 50;
+            this.x -= tileWidth;
             break;
         case "right":
-            this.x += 50;
+            this.x += tileWidth;
             break;
         case "up":
-            this.y -= 50;
+            this.y -= tileHeight;
             break;
         case "down":
-            this.y += 50;
+            this.y += tileHeight;
             break;
     }
-};
+}
 
 //displays player score
-function displayInfo(player) {
+Player.prototype.displayInfo = function(player) {
     var canvas = document.getElementsByTagName("canvas");
     scoreDiv.innerHTML = "Player Score: " + score + " ! ";
     document.body.insertBefore(scoreDiv, canvas[0]);
 
 
-};
+}
 
 Player.prototype.update = function() {
     if (this.x > 505 || this.x < 0) {
-        if (this.x > 400) {
-            this.x = 400;
+        if (this.x >= 505) {
+            this.x = 500;
         } else if (this.x < 0) {
             this.x = 0;
         }
@@ -255,14 +255,14 @@ Player.prototype.update = function() {
             };
             this.reset();
             score += 25;
-            displayInfo(); //make a function that says they win and accounts for jewels collected
+            Player.prototype.displayInfo(); //make a function that says they win and accounts for jewels collected
         }
     }
     //check if its hit anything
     this.updateHitBox();
     this.checkCollisions();
 
-};
+}
 
 /* 
 // Increase number of enemies on screen based on player's score
@@ -287,8 +287,8 @@ var player = new Player();
 var score = 0;
 var scoreDiv = document.createElement("div");
 var allGems = [new Gems(175, 140), new Gems(10, 75), new Gems(420, 220)];
-//$('#lifeOutput').html("<h1>"+lives+"<h1>");
-//$('#scoreOutput').html("<h1>"+score+"<h1>");
+var tileWidth = 101;
+var tileHeight = 83;
 
 
 // This listens for key presses and sends the keys to your
