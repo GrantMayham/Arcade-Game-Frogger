@@ -10,7 +10,7 @@ var Gems = function(x, y) {
         width: this.boxWidth,
         height: this.boxHeight
     };
-    this.sprite = "images/Gem_Blue.png";
+    this.sprite = this.makeRandomGem();
 }
 
 Gems.prototype.makeHitBox = function() {
@@ -66,13 +66,28 @@ Gems.prototype.randomGemsOnWin = function() {
     this.x = Math.floor((Math.random() * 450) + 10);
 }
 
+
+
+//randomizes image chosen for gem
+Gems.prototype.makeRandomGem = function(){
+    var gemSprites = ["images/Gem_Green.png", "images/Gem_Orange.png", "images/Gem_Blue.png", "images/Key.png", "images/Star.png", "images/Heart.png"];
+    function getRandomInt(min,max){
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    };
+    var index = getRandomInt(0, gemSprites.length-1);
+    //this.sprite = gemSprites[index];
+    return gemSprites[index];
+}
+
 // Enemies our player must avoid
 var Enemy = function(x, y, enemySpeed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     this.x = x;
     this.y = y;
-    this.enemySpeed = Enemy.prototype.changeEnemySpeeds(this);
+    this.enemySpeed = this.changeEnemySpeeds();
     this.boxWidth = 100;
     this.boxHeight = 70;
     this.hitBox = {
